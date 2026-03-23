@@ -1,6 +1,43 @@
 ---
 name: vibe-coding-framework
 description: 基于"道法术器"哲学框架的 AI 辅助编程方法论。提供方向设定、架构设计、调试技巧、工具配置的系统化指导。
+
+input_schema:
+  project_stage:
+    type: string
+    required: true
+    enum: ["planning", "architecture", "coding", "debugging", "review"]
+    description: 当前项目阶段
+  current_issue:
+    type: string
+    required: false
+    description: 当前遇到的问题（可选）
+
+output_schema:
+  layer:
+    type: string
+    enum: ["道", "法", "术", "器"]
+    description: 适用的框架层次
+  guidance:
+    type: string
+    description: 具体指导内容
+  checklist:
+    type: array
+    items: { type: string }
+  next_steps:
+    type: array
+    items: { type: string }
+
+verification:
+  - check: "output.layer matches project_stage mapping"
+    severity: error
+  - check: "len(output.checklist) > 0"
+    severity: error
+  - check: "output.guidance contains actionable advice"
+    severity: error
+  - check: "len(output.next_steps) >= 1"
+    severity: warning
+
 ---
 
 # Vibe Coding 框架
